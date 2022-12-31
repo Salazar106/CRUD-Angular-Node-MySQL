@@ -1,0 +1,136 @@
+<div class="row justify-content-center mt-5">
+    <div class="col-11">
+
+        <!--? Boton que abre modal de crear incidencia -->
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#crearIncidencia">
+            <i class="bi bi-journal-plus"></i> CREAR INCIDENCIA
+        </button>
+
+        <table class="table table-hover  mt-2">
+            <thead>
+                <tr class="table-primary">
+                    <th scope="col">ID</th>
+                    <th scope="col">CEDULA</th>
+                    <th scope="col">FECHA</th>
+                    <th scope="col">DESCRIPCION</th>
+                    <th scope="col">ASESOR</th>
+                    <th scope="col">ESTADO</th>
+                    <th scope="col">FUNCIONES</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let incidencia of incidencias">
+                    <th scope="row">{{incidencia.id}}</th>
+                    <td>{{incidencia.cedula}}</td>
+                    <td>{{incidencia.fecha}}</td>
+                    <td>{{incidencia.descripcion}}</td>
+                    <td>{{incidencia.nombre}}</td>
+                    <td >{{incidencia.estado}}</td>
+                    <td>
+                        <button (click)="declareEditData(incidencia)" type="button" class="btn btn-warning " data-bs-toggle="modal"
+                            data-bs-target="#editarInc">
+                            <i class="bi bi-pencil-square"></i> 
+                        </button>
+                    </td>
+
+
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<!--! Modal de crear Incidencia-->
+<div class="modal fade" id="crearIncidencia" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Nueva Incidencia</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="newInd" (ngSubmit)="newIncidencia()">
+                    <div class="mb-3">
+                        <label for="cedula" class="form-label">CEDULA DEL CLIENTE</label>
+                        <input type="number" style="direction: none;" class="form-control" formControlName="cedula" id="cedula">
+                        <span style="color: red;" *ngIf="newInd.get('cedula')?.hasError('required') && newInd.get('cedula')?.touched">El Campo es <strong>REQUERIDO</strong></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="descripcion" class="form-label">DESCRIPCION</label>
+                        <textarea class="form-control" formControlName="descripcion" id="descripcion" rows="3"></textarea>
+                        <span style="color: red;" *ngIf="newInd.get('descripcion')?.hasError('required') && newInd.get('descripcion')?.touched">El Campo es <strong>REQUERIDO</strong></span>
+
+                    </div>
+                    <div class="mb-3">
+    
+                        <select class="form-select" formControlName="asesor" aria-label="Default select example">
+                            <option selected>Seleccione un asesor</option>
+                            <option *ngFor="let asesor of asesores" value="{{asesor.id}}">{{asesor.nombre}}</option>
+    
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="fecha" class="form-label">FECHA</label>
+                        <input formControlName="fecha" type="text" style="direction: none;" class="form-control"  id="fecha"  >
+                    </div>
+                </form>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button [disabled]="newInd.invalid" (click)="newIncidencia()" type="submit" class="btn btn-primary" data-bs-dismiss="modal"><i class="bi bi-check2-circle"></i> Crear</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--! Modal de editar Incidencia-->
+<div class="modal fade" id="editarInc" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Incidencia</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="editInd" (ngSubmit)="editIncidencia()">
+                    <div class="mb-3">
+                        <label for="cedula" class="form-label">CEDULA DEL CLIENTE</label>
+                        <input type="number" style="direction: none;" class="form-control" formControlName="cedula" id="cedula">
+                        <span style="color: red;" *ngIf="editInd.get('cedula')?.hasError('required') && editInd.get('cedula')?.touched">El Campo es <strong>REQUERIDO</strong></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="descripcion" class="form-label">DESCRIPCION</label>
+                        <textarea class="form-control" formControlName="descripcion" id="descripcion" rows="3"></textarea>
+                        <span style="color: red;" *ngIf="editInd.get('descripcion')?.hasError('required') && editInd.get('descripcion')?.touched">El Campo es <strong>REQUERIDO</strong></span>
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="descripcion" class="form-label">ASESOR:</label>
+                        <select class="form-select" formControlName="asesor" aria-label="Default select example">
+                            
+                            <option *ngFor="let asesor of asesores" value="{{asesor.id}}">{{asesor.nombre}}</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="fecha" class="form-label">ESTADO</label>
+                        <select class="form-select" formControlName="estado" aria-label="Default select example">
+                            <option value="1">Abierto</option>
+                            <option value="0">Cerrado</option>                     
+    
+                        </select>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button data-bs-dismiss="modal" (click)="editIncidencia()" type="submit" class="btn btn-primary"><i class="bi bi-pencil"></i> Editar</button>
+            </div>
+        </div>
+    </div>
+</div>
