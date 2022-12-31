@@ -64,11 +64,10 @@
 
                     </div>
                     <div class="mb-3">
-    
+                        <label for="descripcion" class="form-label">ASESOR</label>
                         <select class="form-select" formControlName="asesor" aria-label="Default select example">
-                            <option selected>Seleccione un asesor</option>
                             <option *ngFor="let asesor of asesores" value="{{asesor.id}}">{{asesor.nombre}}</option>
-    
+                                
                         </select>
                     </div>
                     <div class="mb-3">

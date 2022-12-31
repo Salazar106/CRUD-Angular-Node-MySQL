@@ -103,7 +103,7 @@ export class IncidenciasComponent implements OnInit {
 
     }
 
-    this.IncidenciasService.editProfile(this.editIncidenciaData.id,edit).subscribe((res: any) => {
+    this.IncidenciasService.editIncidencia(this.editIncidenciaData.id,edit).subscribe((res: any) => {
       Swal.fire({
         position: "center",
         icon: "success",

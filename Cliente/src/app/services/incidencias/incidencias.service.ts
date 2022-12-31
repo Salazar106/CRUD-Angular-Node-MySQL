@@ -18,7 +18,7 @@ export class IncidenciasService {
   }
 
 
-  editProfile(id: number, data: any) {
+  editIncidencia(id: number, data: any) {
     return this.http.put(`${this.API_URL}/editIncidencia/${id}`, data)
   }
 
